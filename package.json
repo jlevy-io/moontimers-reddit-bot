@@ -1,0 +1,21 @@
+{
+  "name": "mt-reddit-bot",
+  "version": "1.0.0",
+  "description": "Reddit bot to add posts to MoonTimers",
+  "main": "./src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12",
+    "remark": "^13.0.0",
+    "snoostorm": "^1.5.2",
+    "snoowrap": "^1.23.0",
+    "strip-markdown": "^4.1.0",
+    "winston": "^3.3.3"
+  }
+}
