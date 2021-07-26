@@ -160,7 +160,7 @@ const main = async () => {
     try {
       const test = await r.getSubmission(postID).fetch();
       const data = test.toJSON();
-      console.log(data);
+
       const {
         id,
         author,
@@ -170,6 +170,7 @@ const main = async () => {
         title,
         url,
         ups,
+        subreddit,
       } = data;
 
       if (!link_flair_text.includes("DD")) {
@@ -197,6 +198,7 @@ const main = async () => {
           selftext: trimText(String(stripped)),
           title: trimText(title),
           url,
+          subreddit,
         },
       });
       return response && response.status === 200;
