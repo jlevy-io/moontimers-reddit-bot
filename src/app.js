@@ -9,6 +9,7 @@ const { createLogger, format, transports } = require("winston");
 const strings = ["!moontimer", "!moontimers"];
 const apiUrl = "https://api.moontimers.com/api/mt_submit";
 const subReddits = ["Superstonk", "GME", "GMEJungle"];
+const minimumUpvotes = 10;
 
 const replyMessage = `
 🤖 *Beep boop!  I'm a robot.*
@@ -159,6 +160,7 @@ const main = async () => {
     try {
       const test = await r.getSubmission(postID).fetch();
       const data = test.toJSON();
+      console.log(data);
       const {
         id,
         author,
@@ -175,7 +177,7 @@ const main = async () => {
         return false;
       }
 
-      if (parseInt(ups, 10) < 25) {
+      if (parseInt(ups, 10) < minimumUpvotes) {
         logger.info(`Not enough upvotes: ${ups}`);
         return false;
       }
