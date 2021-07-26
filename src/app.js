@@ -103,6 +103,9 @@ const main = async () => {
         }
         return null;
       } catch (err) {
+        if (err && err.response) {
+          return logger.error(err.response);
+        }
         return logger.error(err);
       }
     });
@@ -123,6 +126,9 @@ const main = async () => {
         }
         return null;
       } catch (err) {
+        if (err && err.response) {
+          return logger.error(err.response);
+        }
         return logger.error(err);
       }
     });
@@ -143,15 +149,15 @@ const main = async () => {
         }
         return null;
       } catch (err) {
-        if (err && err.response && err.response.data) {
-          return logger.error(err.response.data);
+        if (err && err.response) {
+          return logger.error(err.response);
         }
         return logger.error(err);
       }
     });
   } catch (err) {
-    if (err && err.response && err.response.data) {
-      return logger.error(err.response.data);
+    if (err && err.response) {
+      return logger.error(err.response);
     }
     return logger.error(err);
   }
@@ -203,8 +209,8 @@ const main = async () => {
       });
       return response && response.status === 200;
     } catch (err) {
-      if (err && err.response && err.response.data) {
-        logger.error(err.response.data);
+      if (err && err.response) {
+        logger.error(err.response);
         return false;
       }
       logger.error(err);
