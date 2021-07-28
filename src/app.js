@@ -58,6 +58,7 @@ if (process.env.NODE_ENV !== "production") {
   logger.add(
     new transports.Console({
       format: format.combine(format.colorize(), format.simple()),
+      level: "info",
     })
   );
 }
@@ -189,7 +190,7 @@ const main = async () => {
         return false;
       }
 
-      const trimmed = selftext.replace(/[^A-Za-z /;%$#&():,'"!.+-]/g, "");
+      const trimmed = selftext.replace(/[^A-Za-z0-9 /;%$#&():,'"!.+-]/g, "");
       const noLinks = trimmed.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "");
       const stripped = await remark().use(strip).process(noLinks);
       logger.info(trimText(String(stripped)));
