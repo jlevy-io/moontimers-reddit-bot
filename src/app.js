@@ -11,13 +11,20 @@ const apiUrl = "https://api.moontimers.com/api/mt_submit";
 const subReddits = ["Superstonk", "GME", "GMEJungle"];
 const minimumUpvotes = 10;
 
-const replyMessage = `
+const toOrdinal = (n) =>
+  ["st", "nd", "rd"][(((((n < 0 ? -n : n) + 90) % 100) - 10) % 10) - 1] || "th";
+
+const generateReply = (author, count) => {
+  logger.info(`Author: ${author}, Count: ${count}`);
+  return `
 🤖 *Beep boop!  I'm a robot.*
 
 > This DD post has been added to
 > [🌕MoonTimers.com](https://moontimers.com/dd)
-
+>
+> This is the ${count}${toOrdinal(count)} post by /u/${author}
 `;
+};
 
 const r = new Snoowrap({
   userAgent: "mt-reddit-bot",
@@ -92,11 +99,12 @@ const main = async () => {
           logger.info("MATCH FOUND for !moontimer");
           const isValid = await checkPost(comment.link_id);
           if (isValid) {
-            logger.info(`Post added to MoonTimers from /r/${subReddits[0]}`);
+            logger.info(`Post added to MoonTimers from /r/${subReddits[1]}`);
+            const reply = generateReply(isValid.author, isValid.count);
+            logger.info(reply);
+            return r.getSubmission(comment.name).reply(reply);
           }
-          return isValid
-            ? r.getSubmission(comment.name).reply(replyMessage)
-            : null;
+          return null;
         }
         return null;
       } catch (err) {
@@ -117,10 +125,11 @@ const main = async () => {
           const isValid = await checkPost(comment.link_id);
           if (isValid) {
             logger.info(`Post added to MoonTimers from /r/${subReddits[1]}`);
+            const reply = generateReply(isValid.author, isValid.count);
+            logger.info(reply);
+            return r.getSubmission(comment.name).reply(reply);
           }
-          return isValid
-            ? r.getSubmission(comment.name).reply(replyMessage)
-            : null;
+          return null;
         }
         return null;
       } catch (err) {
@@ -140,11 +149,12 @@ const main = async () => {
           logger.info("MATCH FOUND for !moontimer");
           const isValid = await checkPost(comment.link_id);
           if (isValid) {
-            logger.info(`Post added to MoonTimers from /r/${subReddits[2]}`);
+            logger.info(`Post added to MoonTimers from /r/${subReddits[1]}`);
+            const reply = generateReply(isValid.author, isValid.count);
+            logger.info(reply);
+            return r.getSubmission(comment.name).reply(reply);
           }
-          return isValid
-            ? r.getSubmission(comment.name).reply(replyMessage)
-            : null;
+          return null;
         }
         return null;
       } catch (err) {
@@ -208,7 +218,10 @@ const main = async () => {
           subreddit,
         },
       });
-      return response && response.status === 200;
+      if (response) {
+        logger.info(JSON.stringify(response.data));
+      }
+      return response && response.status === 200 ? response.data : null;
     } catch (err) {
       if (err && err.response) {
         logger.error(err.response);
