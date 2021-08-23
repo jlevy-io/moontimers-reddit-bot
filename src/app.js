@@ -38,10 +38,6 @@ const logger = createLogger({
   ),
   defaultMeta: { service: "mt-reddit-bot" },
   transports: [
-    //
-    // - Write to all logs with level `info` and below to `quick-start-combined.log`.
-    // - Write all logs error (and below) to `quick-start-error.log`.
-    //
     new transports.File({
       filename: "./logs/error.log",
       level: "error",
@@ -105,9 +101,10 @@ const main = async () => {
         return null;
       } catch (err) {
         if (err && err.response) {
-          return logger.error(err.response);
+          return logger.error(err.response.data.message);
         }
-        return logger.error(err);
+        // return logger.error(err);
+        return;
       }
     });
 
@@ -128,9 +125,10 @@ const main = async () => {
         return null;
       } catch (err) {
         if (err && err.response) {
-          return logger.error(err.response);
+          return logger.error(err.response.data.message);
         }
-        return logger.error(err);
+        // return logger.error(err);
+        return;
       }
     });
 
@@ -151,16 +149,18 @@ const main = async () => {
         return null;
       } catch (err) {
         if (err && err.response) {
-          return logger.error(err.response);
+          return logger.error(err.response.data.message);
         }
-        return logger.error(err);
+        // return logger.error(err);
+        return;
       }
     });
   } catch (err) {
     if (err && err.response) {
-      return logger.error(err.response);
+      return logger.error(err.response.data.message);
     }
-    return logger.error(err);
+    // return logger.error(err);
+    return;
   }
 
   const checkPost = async (postID) => {
