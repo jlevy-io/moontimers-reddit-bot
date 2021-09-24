@@ -22,6 +22,7 @@ const generateReply = (author, count) => {
 > This DD post has been added to
 > [🌕MoonTimers.com](https://moontimers.com/dd)
 >
+>
 > This is the ${count}${toOrdinal(count)} post by /u/${author}
 `;
 };
@@ -79,6 +80,7 @@ const main = async () => {
       pollTime: 3000,
     });
 
+    /*
     const streamGME = new CommentStream(r, {
       subreddit: subReddits[1],
       limit: 10,
@@ -90,6 +92,7 @@ const main = async () => {
       limit: 10,
       pollTime: 3000,
     });
+    */
 
     logger.info(`Listening to stream from /r/${subReddits[0]}`);
     streamSS.on("item", async (comment) => {
@@ -109,13 +112,14 @@ const main = async () => {
         return null;
       } catch (err) {
         if (err && err.response) {
-          return logger.error(err.response.data.message);
+          //  return logger.error(err.response.data.message);
         }
         // return logger.error(err);
         return;
       }
     });
 
+    /*
     logger.info(`Listening to stream from /r/${subReddits[1]}`);
     streamGME.on("item", async (comment) => {
       try {
@@ -134,7 +138,7 @@ const main = async () => {
         return null;
       } catch (err) {
         if (err && err.response) {
-          return logger.error(err.response.data.message);
+          //  return logger.error(err.response.data.message);
         }
         // return logger.error(err);
         return;
@@ -159,15 +163,16 @@ const main = async () => {
         return null;
       } catch (err) {
         if (err && err.response) {
-          return logger.error(err.response.data.message);
+          //  return logger.error(err.response.data.message);
         }
         // return logger.error(err);
         return;
       }
     });
+    */
   } catch (err) {
     if (err && err.response) {
-      return logger.error(err.response.data.message);
+      //  return logger.error(err.response.data.message);
     }
     // return logger.error(err);
     return;
@@ -224,10 +229,10 @@ const main = async () => {
       return response && response.status === 200 ? response.data : null;
     } catch (err) {
       if (err && err.response) {
-        logger.error(err.response);
+        //  logger.error(err.response);
         return false;
       }
-      logger.error(err);
+      //  logger.error(err);
       return false;
     }
   };
