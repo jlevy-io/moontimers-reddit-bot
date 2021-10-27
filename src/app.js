@@ -195,7 +195,7 @@ const main = async () => {
         subreddit,
       } = data;
 
-      if (!link_flair_text.includes("DD")) {
+      if (!link_flair_text.includes("Due Diligence")) {
         logger.info(`Wrong flair: ${link_flair_text}`);
         return false;
       }
